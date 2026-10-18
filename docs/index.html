@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://rpc.mainnet.dbkchain.io https://ethereum-rpc.publicnode.com https://eth.drpc.org https://cloudflare-eth.com; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>DBK Chain → Ethereum: completar levantamento</title>
+<style>
+:root{color-scheme:dark}
+body{margin:0;font:16px/1.45 -apple-system,system-ui,sans-serif;background:#0d0f12;color:#e8eaed}
+main{max-width:520px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:20px;margin:4px 0 12px}
+.card{background:#171a1f;border:1px solid #262a31;border-radius:14px;padding:16px;margin:12px 0}
+label{font-size:13px;color:#9aa0a6}
+input{width:100%;box-sizing:border-box;margin:6px 0 10px;padding:12px;border-radius:10px;border:1px solid #333;background:#0d0f12;color:#e8eaed;font:13px ui-monospace,monospace}
+button{width:100%;padding:14px;margin:6px 0;border:0;border-radius:12px;font-size:16px;font-weight:600;background:#2d6cdf;color:#fff}
+button.sec{background:#2a2f37}
+button:disabled{opacity:.5}
+.row{display:flex;justify-content:space-between;margin:4px 0}
+.ok{color:#5bd68b}.warn{color:#f2c14e}.err{color:#ff6b6b}
+a{color:#7fb0ff}
+#log p{font-size:14px;margin:6px 0;word-break:break-word}
+small{color:#9aa0a6}
+</style>
+</head>
+<body>
+<main>
+<h1>Completar levantamento DBK Chain → Ethereum</h1>
+<div class="card">
+  <label for="tx">Hash da transação de levantamento (na DBK Chain)</label>
+  <input id="tx" autocomplete="off" spellcheck="false">
+  <button id="check" class="sec">Verificar estado</button>
+  <div class="row"><span>Valor</span><b id="amount">—</b></div>
+  <div class="row"><span>Destino (Ethereum)</span><b id="to">—</b></div>
+  <p id="status">—</p>
+</div>
+<div class="card">
+  <button id="connect">Ligar carteira (rede Ethereum)</button>
+  <p id="acct"></p>
+  <button id="prove" hidden>1 · Provar (Prove)</button>
+  <button id="finalize" hidden>2 · Finalizar (Finalize)</button>
+  <div id="log"></div>
+</div>
+<div class="card"><small>
+  Como funciona: usa a ponte oficial (OptimismPortal <a href="https://etherscan.io/address/0x63CA00232F471bE2A3Bf3C4e95Bc1d2B3EA5DB92" target="_blank" rel="noopener">0x63CA…DB92</a>, ver <a href="https://docs.dbkchain.io/general-info/mainnet-contract-addresses/l1-l2-contracts" target="_blank" rel="noopener">docs DBK</a>).
+  Passo 1 prova o levantamento; depois esperam-se 7 dias; passo 2 finaliza e o ETH chega ao endereço de destino. O destino está fixo no levantamento e não pode ser mudado por ninguém.
+  Esta página nunca pede seed phrase nem chave privada, não pede aprovações de tokens e não tem servidor: só lê dados públicos e pede à tua carteira para assinar estas duas chamadas. Confirma sempre na carteira que a transação vai para 0x63CA…DB92 e que o valor enviado é 0 ETH.
+</small></div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
