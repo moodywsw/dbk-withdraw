@@ -77,7 +77,7 @@ async function connect() {
     state.wallet = createWalletClient({ account, chain: mainnet, transport: custom(eth) }).extend(walletActionsL1())
     const bal = await l1.getBalance({ address: account })
     const gp = await l1.getGasPrice()
-    const need = (state.status === 'ready-to-finalize' ? 130000n : 300000n) * gp * 2n
+    const need = (state.status === 'ready-to-finalize' ? 400000n : 300000n) * gp * 2n
     log(`Saldo no Ethereum: ${Number(formatEther(bal)).toFixed(5)} ETH · gás estimado do próximo passo ≈ ${Number(formatEther(need / 2n)).toFixed(6)} ETH`)
     if (bal < need) log('⚠️ Precisas de um pouco de ETH na rede Ethereum (não DBK) nesta carteira para pagar o gás.', 'warn')
     render()
@@ -105,7 +105,7 @@ async function prove() {
 async function finalize() {
   try {
     $('finalize').disabled = true
-    const hash = await state.wallet.finalizeWithdrawal({ withdrawal: state.w, account: state.account, targetChain: dbk })
+    const hash = await state.wallet.finalizeWithdrawal({ withdrawal: state.w, account: state.account, targetChain: dbk, gas: 400000n })
     await waitAndRefresh(hash)
   } catch (e) { log('Erro: ' + (e.shortMessage || e.message), 'err') } finally { $('finalize').disabled = false }
 }
